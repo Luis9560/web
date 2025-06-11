@@ -1,0 +1,677 @@
+
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cinemax</title>
+         <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <!-- ... (todo tu head igual) ... -->
+        </head>
+        <body>
+        <!-- Modal de datos de usuario -->
+        <div id="modalUsuario" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:#23243acc;z-index:3000;display:flex;align-items:center;justify-content:center;">
+            <form id="formUsuario" style="background:linear-gradient(135deg,#232526 0%,#414345 100%);padding:32px 24px;border-radius:16px;box-shadow:0 4px 24px #000a;max-width:350px;width:90vw;text-align:center;position:relative;border:2px solid #ffd70033;">
+            <h2 style="color:#ffd700;margin-bottom:18px;">Bienvenido a Cinemax</h2>
+            <input type="text" id="nombreUsuario" placeholder="Nombre" required style="width:90%;margin-bottom:12px;padding:8px;border-radius:8px;border:none;">
+            <input type="text" id="apellidoUsuario" placeholder="Apellido" required style="width:90%;margin-bottom:12px;padding:8px;border-radius:8px;border:none;">
+            <input type="email" id="correoUsuario" placeholder="Correo electrónico" required style="width:90%;margin-bottom:18px;padding:8px;border-radius:8px;border:none;">
+            <button type="submit" style="background:linear-gradient(90deg,#ffd700 0%,#ffb347 100%);color:#23243a;font-weight:bold;border:none;border-radius:30px;padding:10px 30px;font-size:1.1em;cursor:pointer;">Ingresar</button>
+            </form>
+        </div>
+
+        <!-- ... (todo tu HTML igual, desde <header> hasta el final) ... -->
+
+        <script>
+            // Guardar datos de usuario
+            let datosUsuario = {};
+
+            // Mostrar modal al cargar
+            window.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('modalUsuario').style.display = 'flex';
+            });
+
+            // Manejar envío del formulario
+            document.getElementById('formUsuario').onsubmit = function(e) {
+                e.preventDefault();
+                datosUsuario.nombre = document.getElementById('nombreUsuario').value.trim();
+                datosUsuario.apellido = document.getElementById('apellidoUsuario').value.trim();
+                datosUsuario.correo = document.getElementById('correoUsuario').value.trim();
+                document.getElementById('modalUsuario').style.display = 'none';
+            };
+        </script>
+        </body>
+        </html>
+
+        <style>
+            body {
+                font-family: 'Segoe UI', Arial, sans-serif;
+                background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+                color: #f3f5ff;
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+            }
+            header {
+                background: linear-gradient(90deg, #232526 0%, #414345 100%);
+                padding: 30px 0 20px 0;
+                text-align: center;
+                box-shadow: 0 4px 16px #0004;
+            }
+            header h1 {
+                margin: 0;
+                font-size: 2.8em;
+                letter-spacing: 3px;
+                color: #ffd700;
+                text-shadow: 2px 2px 8px #0008;
+            }
+            nav {
+                background: #23243a;
+                padding: 14px 0;
+                text-align: center;
+                box-shadow: 0 2px 8px #0003;
+            }
+            nav a {
+                color: #ffd700;
+                text-decoration: none;
+                margin: 0 28px;
+                font-weight: bold;
+                font-size: 1.1em;
+                padding: 10px 18px;
+                border-radius: 30px;
+                transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+                box-shadow: 0 2px 8px #0002;
+                background: rgba(255,255,255,0.03);
+            }
+            nav a:hover {
+                background: #ffd700;
+                color: #23243a;
+                box-shadow: 0 4px 16px #ffd70044;
+            }
+            .cartelera, .estrenos, .promociones, .contacto, .comida-section {
+                display: none;
+            }
+            .active-section {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 36px;
+                padding: 50px 10px 30px 10px;
+            }
+            .pelicula {
+                background: linear-gradient(135deg, #232526 0%, #414345 100%);
+                border-radius: 16px;
+                box-shadow: 0 4px 24px #0007;
+                width: 240px;
+                overflow: hidden;
+                text-align: center;
+                transition: transform 0.25s, box-shadow 0.25s;
+                border: 2px solid #ffd70033;
+            }
+            .pelicula:hover {
+                transform: scale(1.045);
+                box-shadow: 0 8px 32px #ffd70044;
+                border-color: #ffd70077;
+            }
+            .pelicula img {
+                width: 100%;
+                height: 320px;
+                object-fit: cover;
+                border-bottom: 2px solid #ffd70033;
+            }
+            .pelicula h2 {
+                font-size: 1.1em;
+                margin: 12px 10px 10px 10px;
+                color: #ffd700;
+                letter-spacing: 1px;
+            }
+            .pelicula p {
+                margin: 0 10px 10px 10px;
+                font-size: 0.98em;
+                color: #f3f5ff;
+            }
+            .pelicula .horarios {
+                background: #23243a;
+                padding: 10px 0;
+                color: #ffd700;
+                font-size: 1em;
+                border-radius: 0 0 8px 8px;
+                margin-bottom: 10px;
+            }
+            .pelicula .boton-trailer,
+            .pelicula .boton-carrito {
+                margin: 12px 0 15px 0;
+                padding: 10px 22px;
+                background: linear-gradient(90deg, #2e0bf1 0%, #00b894 100%);
+                color: #fff;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 1em;
+                box-shadow: 0 2px 8px #0004;
+                transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            }
+            .pelicula .boton-trailer:hover,
+            .pelicula .boton-carrito:hover {
+                background: linear-gradient(90deg, #ffd700 0%, #ffb347 100%);
+                color: #23243a;
+                box-shadow: 0 4px 16px #ffd70044;
+            }
+            .info-section {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                padding: 50px 10px 30px 10px;
+                color: #fff;
+                background: linear-gradient(135deg, #232526 0%, #414345 100%);
+                border-radius: 16px;
+                box-shadow: 0 4px 24px #0007;
+                margin: 30px auto;
+                max-width: 900px;
+            }
+            .active-info {
+                display: flex;
+            }
+            .carrito-container {
+                position: fixed;
+                top: 70px;
+                right: 30px;
+                z-index: 999;
+                background: linear-gradient(135deg, #232526 0%, #414345 100%);
+                color: #fff;
+                border-radius: 16px;
+                box-shadow: 0 4px 24px #000a;
+                width: 340px;
+                max-height: 80vh;
+                overflow-y: auto;
+                padding: 24px 18px 18px 18px;
+                border: 2px solid #ffd70033;
+                transition: box-shadow 0.2s;
+            }
+            .carrito-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .carrito-header h3 {
+                margin: 0;
+                font-size: 1.3em;
+                color: #ffd700;
+            }
+            .carrito-list {
+                margin: 18px 0 0 0;
+                padding: 0;
+                list-style: none;
+            }
+            .carrito-list li {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                font-size: 1em;
+                background: #23243a;
+                border-radius: 8px;
+                padding: 7px 12px;
+            }
+            .carrito-total {
+                margin-top: 14px;
+                font-weight: bold;
+                color: #ffd700;
+                text-align: right;
+                font-size: 1.1em;
+            }
+            .carrito-vacio {
+                color: #aaa;
+                text-align: center;
+                margin: 22px 0;
+            }
+            .carrito-btn-eliminar {
+                background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);
+                color: #fff;
+                border: none;
+                border-radius: 20px;
+                padding: 3px 12px;
+                cursor: pointer;
+                font-size: 1em;
+                margin-left: 8px;
+                transition: background 0.2s, box-shadow 0.2s;
+                box-shadow: 0 2px 8px #0003;
+            }
+            .carrito-btn-eliminar:hover {
+                background: linear-gradient(90deg, #ffd700 0%, #e74c3c 100%);
+                color: #23243a;
+                box-shadow: 0 4px 16px #ffd70044;
+            }
+            .carrito-toggle {
+                background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+                color: #23243a;
+                border: none;
+                border-radius: 50%;
+                width: 44px;
+                height: 44px;
+                font-size: 1.3em;
+                font-weight: bold;
+                cursor: pointer;
+                margin-left: 10px;
+                box-shadow: 0 2px 8px #0004;
+                transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            }
+            .carrito-toggle:hover {
+                background: linear-gradient(135deg, #ffb347 0%, #ffd700 100%);
+                color: #2e0bf1;
+                box-shadow: 0 4px 16px #ffd70044;
+            }
+            .carrito-container.oculto {
+                display: none;
+            }
+            .comida-section {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 36px;
+                padding: 50px 10px 30px 10px;
+            }
+            .comida-item {
+                background: linear-gradient(135deg, #232526 0%, #414345 100%);
+                border-radius: 16px;
+                box-shadow: 0 4px 24px #0007;
+                width: 200px;
+                overflow: hidden;
+                text-align: center;
+                margin-bottom: 20px;
+                border: 2px solid #ffd70033;
+                transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+            }
+            .comida-item:hover {
+                transform: scale(1.045);
+                box-shadow: 0 8px 32px #ffd70044;
+                border-color: #ffd70077;
+            }
+            .comida-item img {
+                width: 100%;
+                height: 120px;
+                object-fit: cover;
+                border-bottom: 2px solid #ffd70033;
+            }
+            .comida-item h4, .comida-item h2 {
+                margin: 12px 0 5px 0;
+                color: #ffd700;
+                font-size: 1.1em;
+            }
+            .comida-item p {
+                margin: 0 0 10px 0;
+                font-size: 0.98em;
+                color: #f3f5ff;
+            }
+            .comida-item .boton-carrito {
+                margin-bottom: 14px;
+                padding: 10px 22px;
+                background: linear-gradient(90deg, #2e0bf1 0%, #00b894 100%);
+                color: #fff;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 1em;
+                box-shadow: 0 2px 8px #0004;
+                transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            }
+            .comida-item .boton-carrito:hover {
+                background: linear-gradient(90deg, #ffd700 0%, #ffb347 100%);
+                color: #23243a;
+                box-shadow: 0 4px 16px #ffd70044;
+            }
+            .fecha {
+                color: #ffd700;
+                font-size: 0.95em;
+                margin-bottom: 8px;
+            }
+            footer {
+                background: #23243a;
+                text-align: center;
+                padding: 18px 0;
+                color: #ffd700;
+                margin-top: 40px;
+                font-size: 1.05em;
+                letter-spacing: 1px;
+                box-shadow: 0 -2px 8px #0003;
+            }
+            @media (max-width: 900px) {
+                .active-section, .comida-section {
+                    gap: 18px;
+                    padding: 30px 2vw 20px 2vw;
+                }
+                .pelicula, .comida-item {
+                    width: 90vw;
+                    max-width: 320px;
+                }
+                .carrito-container {
+                    width: 95vw;
+                    right: 2vw;
+                    left: 2vw;
+                    top: 10px;
+                    padding: 10px 5px;
+                }
+            }
+            @media (max-width: 600px) {
+                nav a {
+                    margin: 0 8px;
+                    font-size: 1em;
+                    padding: 8px 10px;
+                }
+                .carrito-toggle {
+                    width: 38px;
+                    height: 38px;
+                    font-size: 1em;
+                }
+            }
+            .boton-pagar {
+                background: linear-gradient(90deg, #ffd700 0%, #ffb347 100%);
+                color: #23243a;
+                font-size: 1.15em;
+                font-weight: bold;
+                border: none;
+                border-radius: 30px;
+                box-shadow: 0 4px 16px #ffd70044;
+                padding: 14px 0;
+                letter-spacing: 1px;
+                transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+            }
+            .boton-pagar:hover {
+                background: linear-gradient(90deg, #ffb347 0%, #ffd700 100%);
+                color: #2e0bf1;
+                box-shadow: 0 6px 24px #ffd70077;
+                transform: scale(1.04);
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Cinemax</h1>
+        </header>
+        <nav>
+            <a href="javascript:void(0)" onclick="showSection('cartelera')">Cartelera</a>
+            <a href="javascript:void(0)" onclick="showSection('estrenos')">Próximos Estrenos</a>
+            <a href="javascript:void(0)" onclick="showSection('promociones')">Promociones</a>
+            <a href="javascript:void(0)" onclick="showSection('comida')">Comida</a>
+        </nav>
+        <div style="text-align:center; margin-top: 20px;">
+            <img src="logo.jpg" alt="Logo Cinemax" style="width:120px; height:auto; border-radius: 50%; box-shadow: 0 2px 12px #ffd70055;">
+        </div>
+
+        <section class="cartelera active-section" id="cartelera">
+            <div class="pelicula">
+                <img src="destino final.webp" alt="Lazos de sangre">
+                <h2>Lazos de sangre</h2>
+                <p>Una emocionante historia llena de adrenalina y terror, te esperamos pronto</p>
+                <div class="horarios">14:00 | 17:00 | 20:00</div>
+                <button class="boton-trailer" onclick="mostrarVentana('Lazos de sangre')">Ver más</button>
+            </div>
+            <div class="pelicula">
+                <img src="lilo.jpg" alt="Lilo y Stitch">
+                <h2>Lilo y Stitch</h2>
+                <p>Ríe sin parar con esta divertida comedia de enredos urbanos.</p>
+                <div class="horarios">13:30 | 16:30 | 19:30</div>
+                <button class="boton-trailer" onclick="mostrarVentana('Lilo y Stitch')">Ver más</button>
+            </div>
+            <div class="pelicula">
+                <img src="avenger.jpg" alt="Nuevos Avengers">
+                <h2>Nuevos Avengers</h2>
+                <p>Un thriller intrigante que te mantendrá al borde del asiento.</p>
+                <div class="horarios">15:00 | 18:00 | 21:00</div>
+                <button class="boton-trailer" onclick="mostrarVentana('Nuevos Avengers')">Ver más</button>
+            </div>
+            <div class="pelicula">
+                <img src="kid.jpg" alt="Karate Kid">
+                <h2>Karate Kid</h2>
+                <p>Una aventura animada para los más pequeños y toda la familia.</p>
+                <div class="horarios">12:00 | 15:00 | 18:00</div>
+                <button class="boton-trailer" onclick="mostrarVentana('Karate Kid')">Ver más</button>
+            </div>
+        </section>
+
+        <!-- Ventana modal para mostrar información -->
+        <div id="ventanaModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#23243acc;z-index:2000;align-items:center;justify-content:center;">
+            <div style="background:linear-gradient(135deg,#232526 0%,#414345 100%);padding:32px 24px;border-radius:16px;box-shadow:0 4px 24px #000a;max-width:350px;width:90vw;text-align:center;position:relative;border:2px solid #ffd70033;">
+                <button onclick="cerrarVentana()" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:1.7em;color:#ffd700;cursor:pointer;">×</button>
+                <h2 id="tituloVentana" style="color:#ffd700;margin-bottom:18px;text-shadow:2px 2px 8px #0008;letter-spacing:1px;"></h2>
+                <div id="contenidoVentana" style="color:#f3f5ff;font-size:1.08em;"></div>
+            </div>
+        </div>
+
+        <section class="estrenos" id="estrenos">
+            <div class="info-section active-info" style="flex-direction: column; align-items: center;">
+                <h2>Próximos Estrenos</h2>
+                <p>¡Muy pronto nuevas películas en cartelera! Mantente atento a nuestras novedades.</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px;">
+                    <div class="pelicula">
+                        <img src="destino final.webp" alt="Lazos de sangre">
+                        <h2>Lazos de sangre</h2>
+                        <p>Una emocionante historia llena de adrenalina y terror, te esperamos pronto</p>
+                        <div class="horarios">14:00 | 17:00 | 20:00</div>
+                    </div>
+                    <div class="pelicula">
+                        <img src="avenger.jpg" alt="Nuevos Avengers">
+                        <h2>Nuevos Avengers</h2>
+                        <p>Un thriller intrigante que te mantendrá al borde del asiento.</p>
+                        <div class="horarios">15:00 | 18:00 | 21:00</div>
+                    </div>
+                    <div class="pelicula">
+                        <img src="lilo.jpg" alt="Lilo y Stitch">
+                        <h2>Lilo y Stitch</h2>
+                        <p>Ríe sin parar con esta divertida comedia de enredos urbanos.</p>
+                        <div class="horarios">13:30 | 16:30 | 19:30</div>
+                    </div>
+                    <div class="pelicula">
+                        <img src="kid.jpg" alt="Karate">
+                        <h2>Karate kid</h2>
+                        <p>Una aventura animada para los más pequeños y toda la familia.</p>
+                        <div class="horarios">13:30 | 16:30 | 19:30</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="promociones" id="promociones">
+            <div class="info-section active-info" style="flex-direction: column; align-items: center;">
+                <h2>Promociones</h2>
+                <p>Consulta nuestras promociones especiales de temporada y descuentos para estudiantes.</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px;">
+                    <div class="comida-item">
+                        <img src="jumbo.jpg" alt="Palomitas Jumbo">
+                        <h2>Solo para estudiantes</h2>
+                        <p>Palomitas jumbo 2 por $100</p>
+                        <div class="fecha">7-jun-2025 | 7-ago-2025</div>
+                        <button class="boton-carrito" onclick="agregarAlCarrito('Promo: 2 Palomitas Jumbo', 100)">Agregar promo</button>
+                    </div>
+                    <div class="comida-item">
+                        <img src="combo.webp" alt="Refresco Grande">
+                        <h2>Solo para estudiantes</h2>
+                        <p>2 refrescos grandes y unas palomitas Jumbo por $190</p>
+                        <div class="fecha">7-jun-2025 | 12-ago-2025</div>
+                        <button class="boton-carrito" onclick="agregarAlCarrito('Promo: 2 Refrescos Grandes + Palomitas Jumbo', 190)">Agregar promo</button>
+                    </div>
+                    <div class="comida-item">
+                        <img src="COMBO FAMILIAR.jpg" alt="Combo Familiar">
+                        <h2>Combo Familiar</h2>
+                        <p>2 refrescos grandes, 1 palomitas jumbo y 1 hod doc por $250</p>
+                        <div class="fecha">7-jun-2025 | 7-ago-2025</div>
+                        <button class="boton-carrito" onclick="agregarAlCarrito('Combo Familiar', 250)">Agregar combo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="comida-section" id="comida">
+            <div class="comida-item">
+                <img src="PALOMAS Grande.jpg" alt="Palomitas">
+                <h4>Palomitas</h4>
+                <p>Clásicas palomitas de maíz recién hechas.</p>
+                <p>$75</p>
+                <button class="boton-carrito" onclick="agregarAlCarrito('Palomitas', 75)">Agregar</button>
+            </div>
+            <div class="comida-item">
+                <img src="COCA.jpg" alt="Refresco Coca-Cola">
+                <h4>Refresco Coca-Cola</h4>
+                <p>Vaso grande de Coca-Cola bien fría.</p>
+                <p>$35</p>
+                <button class="boton-carrito" onclick="agregarAlCarrito('Refresco Coca-Cola', 35)">Agregar</button>
+            </div>
+            <div class="comida-item">
+                <img src="PEPCI.webp" alt="Refresco Pepsi">
+                <h4>Refresco Pepsi</h4>
+                <p>Vaso grande de Pepsi refrescante.</p>
+                <p>$35</p>
+                <button class="boton-carrito" onclick="agregarAlCarrito('Refresco Pepsi', 35)">Agregar</button>
+            </div>
+            <div class="comida-item">
+                <img src="nachos y palomas.jpg" alt="Nachos">
+                <h4>Nachos con palomitas</h4>
+                <p>Con queso derretido y jalapeños.</p>
+                <p>$90</p>
+                <button class="boton-carrito" onclick="agregarAlCarrito('Nachos', 90)">Agregar</button>
+            </div>
+           
+        </section>
+
+        <div class="carrito-container oculto" id="carritoContainer">
+            <div class="carrito-header">
+                <h3>🛒 Carrito</h3>
+                <button class="carrito-toggle" onclick="toggleCarrito()" title="Cerrar">×</button>
+            </div>
+            <ul class="carrito-list" id="carritoLista"></ul>
+            <div class="carrito-vacio" id="carritoVacio">El carrito está vacío.</div>
+            <div class="carrito-total" id="carritoTotal"></div>
+            <button class="boton-carrito boton-pagar" style="width:100%;margin-top:16px;" onclick="pagarCarrito()">Pagar</button>
+        </div>
+        <button class="carrito-toggle" style="position:fixed;top:20px;right:20px;z-index:1000;" onclick="toggleCarrito()" id="carritoToggleBtn" title="Ver carrito">🛒</button>
+
+        <footer>
+            &copy; 2025 Cinemax Todos los derechos a luis angel.
+        </footer>
+
+        <script>
+            // Carrito de compras
+            let carrito = [];
+
+            function toggleCarrito() {
+                const carritoDiv = document.getElementById('carritoContainer');
+                carritoDiv.classList.toggle('oculto');
+            }
+
+            function agregarAlCarrito(nombre, precio) {
+                // Si ya existe, suma cantidad
+                let item = carrito.find(i => i.nombre === nombre);
+                if (item) {
+                    item.cantidad += 1;
+                } else {
+                    carrito.push({ nombre, precio, cantidad: 1 });
+                }
+                actualizarCarrito();
+                // Abre el carrito automáticamente
+                document.getElementById('carritoContainer').classList.remove('oculto');
+            }
+
+            function eliminarDelCarrito(nombre) {
+                carrito = carrito.filter(i => i.nombre !== nombre);
+                actualizarCarrito();
+            }
+
+            function actualizarCarrito() {
+                const lista = document.getElementById('carritoLista');
+                const vacio = document.getElementById('carritoVacio');
+                const totalDiv = document.getElementById('carritoTotal');
+                lista.innerHTML = '';
+                let total = 0;
+                if (carrito.length === 0) {
+                    vacio.style.display = 'block';
+                    totalDiv.textContent = '';
+                } else {
+                    vacio.style.display = 'none';
+                    carrito.forEach(item => {
+                        total += item.precio * item.cantidad;
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <span>${item.nombre} <b>x${item.cantidad}</b></span>
+                            <span>$${item.precio * item.cantidad} <button class="carrito-btn-eliminar" onclick="eliminarDelCarrito('${item.nombre}')">🗑</button></span>
+                        `;
+                        lista.appendChild(li);
+                    });
+                    totalDiv.textContent = 'Total: $' + total;
+                }
+            }
+
+            function pagarCarrito() {
+                if (carrito.length === 0) {
+                    alert('El carrito está vacío.');
+                    return;
+                }
+                alert('¡Gracias por tu compra!');
+                carrito = [];
+                actualizarCarrito();
+                toggleCarrito();
+            }
+
+            // Mostrar sección
+            function showSection(section) {
+                // Oculta todas las secciones
+                document.querySelectorAll('.cartelera, .estrenos, .promociones, .contacto, .comida-section').forEach(function(sec) {
+                    sec.classList.remove('active-section');
+                    sec.style.display = 'none';
+                });
+                document.querySelectorAll('.info-section').forEach(function(info) {
+                    info.classList.remove('active-info');
+                });
+
+                // Muestra la sección seleccionada
+                var selected = document.getElementById(section);
+                if (selected) {
+                    if (selected.classList.contains('cartelera') || selected.classList.contains('comida-section')) {
+                        selected.classList.add('active-section');
+                        selected.style.display = 'flex';
+                    } else {
+                        var info = selected.querySelector('.info-section');
+                        if (info) info.classList.add('active-info');
+                        selected.style.display = 'flex';
+                    }
+                }
+            }
+
+            // Mostrar cartelera por defecto al cargar
+            window.onload = function() {
+                showSection('cartelera');
+                actualizarCarrito();
+            };
+
+            // Modal de películas
+            function mostrarVentana(titulo) {
+                document.getElementById('tituloVentana').textContent = titulo;
+                let contenido = '';
+                switch (titulo) {
+                    case 'Lazos de sangre':
+                        contenido = 'Una emocionante historia llena de adrenalina y terror. ¡No te la pierdas!';
+                        break;
+                    case 'Lilo y Stitch':
+                        contenido = 'Ríe sin parar con esta divertida comedia de enredos urbanos. Ideal para toda la familia.';
+                        break;
+                    case 'Nuevos Avengers':
+                        contenido = 'Un thriller intrigante que te mantendrá al borde del asiento. Acción y aventura garantizadas.';
+                        break;
+                    case 'Karate Kid':
+                        contenido = 'Una aventura animada para los más pequeños y toda la familia. Inspiradora y divertida.';
+                        break;
+                    default:
+                        contenido = 'Próximamente más información.';
+                }
+                document.getElementById('contenidoVentana').textContent = contenido;
+                document.getElementById('ventanaModal').style.display = 'flex';
+            }
+            function cerrarVentana() {
+                document.getElementById('ventanaModal').style.display = 'none';
+            }
+        </script>
+    </body>
+    </html>
